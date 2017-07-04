@@ -1,0 +1,6 @@
+{
+  "name":"lbry-webredirect",
+  "require": {
+    "php":">=7.0"
+  }
+}
