@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Open in LBRY</title>
+  <style>
+    body {
+      max-width: 800px;
+      margin: 30px auto 0;
+      font-size: 24px;
+      line-height: 1.5;
+    }
+    #name {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Open with LBRY</h1>
+  <div>
+    <input type="text" id="name" placeholder="name" />
+  </div>
+  <div>
+    <a id="link" target="_blank"></a>
+  </div>
+  <script>
+    const name = document.getElementById("name"),
+          link = document.getElementById("link");
+
+    function handler() {
+      const url = "https://open.lbry.io/" + encodeURIComponent(name.value.trim());
+      link.href=url;
+      link.textContent=url;
+    }
+
+    handler();
+    name.addEventListener("input", handler);
+  </script>
+</body>
+</html>

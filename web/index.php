@@ -1,7 +1,7 @@
 <?php
 $uri = urldecode(trim(ltrim($_SERVER['REQUEST_URI'],'/')));
 if (!$uri) {
-  echo '¯\_(ツ)_/¯';
+  echo file_get_contents(__DIR__.'/homepage.html');
   exit;
 }
 header('HTTP/1.1 301 Moved Permanently');
