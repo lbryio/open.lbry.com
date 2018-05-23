@@ -1,0 +1,52 @@
+body {
+	background-color:#fff;
+	font-family:sans-serif;	
+}
+    
+div#wrapper {
+	max-width: 800px;
+	margin: 30px auto 0;
+	padding:10px;
+	border-radius:6px;
+	font-size: 14px;
+	line-height: 1.5;    
+	background-color:#eee
+}
+
+div#wrapper h1 {
+	font-size:20px;
+	background-color:#fff;
+	padding:5px
+}
+
+div#wrapper input[type=text] {
+	font-size:16px
+}
+
+#name {
+	font-size: 24px;
+	margin-bottom: 20px;
+	border:1px ridge #ddd;
+	border-radius:6px;
+	line-height:140%;
+	padding:10px
+}
+
+#name:focus {
+	border:1px ridge #ccc;
+}
+
+div#wrapper input {
+	width:97%
+}
+
+div#wrapper #wlink {
+	float:right;
+	margin-top:10px
+}
+       
+div#wrapper #link {
+	color:blue;
+	letter-spacing:2px
+}
+
