@@ -33,7 +33,7 @@ div#wrapper input[type=text] {
 }
 
 #name:focus {
-
+	border:1px ridge #ccc;
 }
 
 div#wrapper input {
