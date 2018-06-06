@@ -19,30 +19,42 @@ div#wrapper h1 {
 	padding:5px
 }
 
-div#wrapper input[type=text] {
-	font-size:16px
-}
-
-#name {
-	font-size: 24px;
+div#wrapper div#claim input#name {
+	font-size:16px;
 	margin-bottom: 20px;
-	border:1px ridge #ddd;
-	border-radius:6px;
+	border:1px double #ddd;
+	border-radius:0 6px 6px 0;
 	line-height:140%;
-	padding:10px
+	padding:10px;
+	width:87%
 }
 
-#name:focus {
-	border:1px ridge #ccc;
+div#wrapper div#claim input#name:focus {
+	border:1px double #ccc;
+	outline:none
 }
 
-div#wrapper input {
-	width:97%
+div#wrapper div#claim span {
+	display:inline-block;
+	width:6%;
+	padding:12px;
+	border-radius:6px 0 0 6px;	
+	background-color:#ddd;
+	margin-right:3px;
+	text-align:right;
+	color:#444;
+	font-weight:bold
 }
 
 div#wrapper #wlink {
-	float:right;
-	margin-top:10px
+	text-align:left;
+	margin-top:10px;
+	background-color:#ddd;
+	width:97%;
+	padding:10px;
+	border-top:10px ridge #ddd;
+	border-radius:0 0 6px 6px;
+	display:none
 }
        
 div#wrapper #link {
