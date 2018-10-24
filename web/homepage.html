@@ -1,36 +1,117 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Open in LBRY</title>
 
-<head>
+    <link rel="stylesheet" href="lbry-color.css"/>
+    <link rel="stylesheet" href="reset.css"/>
 
-  <meta charset="utf-8" />  
-  <title>Open in LBRY</title>  
-  <link rel="stylesheet" href="style.css" />
+    <style>
+      .claim {
+        border: 1px solid var(--lbry-gray-1);
+        height: 2.5rem;
+        margin-bottom: 2rem;
+      }
 
-</head>
+      .claim::after {
+        clear: both;
+        content: "";
+      }
 
-<body>
+      .claim input,
+      .claim span {
+        height: 100%;
+      }
 
- <div id="wrapper">
- 
-  <h1>Open with LBRY</h1>
-  
-  <div id="claim">
-    <span>lbry://</span><input type="text" id="name" placeholder="Enter LBRY Claim / Channel here" maxlength="100" />
-  </div>
-  
-  <div id="wlink">
-    <p>Click to open: <a id="link">&nbsp;&nbsp;</a></p>
-  </div>
-   
-   <div class="wlink">
-    <p><a href="https://lbry.io/get">Download LBRY</a></p>
-  </div>
+      .claim input {
+        border: none;
+        float: right;
+        font-size: inherit;
+        padding-left: 1rem;
+        width: calc(100% - 5rem);
+      }
 
-  
-  
- </div>  
- 
- <script src="interactions.js"></script>
-</body>
+      .claim span {
+        background-color: var(--lbry-gray-1);
+        color: var(--lbry-gray-5);
+        float: left;
+        letter-spacing: 0.05rem;
+        line-height: 2.3;
+        text-align: center;
+        width: 5rem;
+      }
+
+      .instructions {
+        margin-bottom: 2rem;
+      }
+
+      .instructions p:not(:last-of-type) {
+        margin-bottom: 1rem;
+      }
+
+      .wlink {
+        border-left: 5px solid var(--lbry-teal-5);
+        padding: 0.5rem 1rem;
+        position: relative;
+      }
+
+      .wlink:not(:last-of-type) {
+        margin-bottom: 2rem;
+      }
+
+      .wlink::after {
+        width: 100%; height: 100%;
+        top: 0; left: 0;
+
+        background-color: var(--lbry-gray-1);
+        content: "";
+        opacity: 0.3;
+        position: absolute;
+        z-index: -1;
+      }
+
+      code {
+        background-color: var(--lbry-black);
+        border-radius: 0.2rem;
+        color: var(--lbry-white);
+        font-family: Inconsolata, "Fira Mono", "Droid Sans Mono", "Source Code Pro",
+    Consolas, "Lucida Console", "Courier New", Courier, monospace;
+        font-size: 1.2rem;
+        letter-spacing: 0.025rem;
+        padding: 0.2rem 0.5rem;
+      }
+
+      a {
+        color: var(--lbry-teal-4);
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section>
+      <h1>Open with LBRY</h1>
+
+      <div class="claim">
+        <span>lbry://</span><input id="name" maxlength="100" placeholder="Enter LBRY Claim / Channel here" type="text"/>
+      </div>
+
+      <div class="wlink" id="wlink" style="display: none;">
+        <p>Click to open: <a id="link">&nbsp;&nbsp;</a></p>
+      </div>
+
+      <div class="instructions">
+        <p>To create a hyperlink that opens in LBRY simply copy and paste the location of the file from the LBRY app into the claim field above (do not include <code>lbry://</code>).</p>
+
+        <p>For example, <code>lbry://LBRYCreditsAcceptedHere</code> will open as <code>https://open.lbry.io/LBRYCreditsAcceptedHere</code>.</p>
+      </div>
+
+      <div class="wlink">
+        <p><a href="https://lbry.io/get">Download LBRY</a></p>
+      </div>
+    </section>
+  </body>
+
+  <script src="interactions.js"></script>
 </html>

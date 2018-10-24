@@ -1,15 +1,15 @@
 body {
 	background-color:#fff;
-	font-family:sans-serif;	
+	font-family:sans-serif;
 }
-    
+
 div#wrapper {
 	max-width: 800px;
 	margin: 30px auto 0;
 	padding:10px;
 	border-radius:6px;
 	font-size: 14px;
-	line-height: 1.5;    
+	line-height: 1.5;
 	background-color:#eee
 }
 
@@ -38,7 +38,7 @@ div#wrapper div#claim span {
 	display:inline-block;
 	width:6%;
 	padding:12px;
-	border-radius:6px 0 0 6px;	
+	border-radius:6px 0 0 6px;
 	background-color:#ddd;
 	margin-right:3px;
 	text-align:right;
@@ -56,7 +56,7 @@ div#wrapper #wlink {
 	border-radius:0 0 6px 6px;
 	display:none
 }
-       
+
 div#wrapper #link {
 	color:blue;
 	letter-spacing:2px
