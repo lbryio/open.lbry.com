@@ -46,21 +46,11 @@
     ga("create", "UA-60403362-1", "auto");
     ga("send", "pageview");
 
-    function checkForURL() {
-      const url = new URL(window.location.href);
-
-      if (
-        !url.href.split("/").pop() ||
-        url.href.split("/").pop() === "interstitial.html"
-      ) return;
-
-      const cleanedURL = url.href.split("/").pop().replace("interstitial.html?", "").trim();
-
+    const url = decodeURIComponent(window.location.pathname.replace(/^\//,""));
+    if (url) {
       setTimeout(() => {
-        window.location = `lbry://${cleanedURL}`;
+        window.location = "lbry://" + url;
       }, 2000);
     }
-
-    checkForURL();
   </script>
 </html>

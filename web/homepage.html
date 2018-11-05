@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>Open in LBRY</title>
 
-    <link rel="stylesheet" href="lbry-color.css"/>
-    <link rel="stylesheet" href="reset.css"/>
+    <link rel="stylesheet" href="lbry-color.css" />
+    <link rel="stylesheet" href="reset.css" />
 
     <style>
+      section {
+        max-width: 800px;
+      }
+
       .claim {
         border: 1px solid var(--lbry-gray-1);
         height: 2.5rem;
@@ -61,8 +65,10 @@
       }
 
       .wlink::after {
-        width: 100%; height: 100%;
-        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
 
         background-color: var(--lbry-gray-1);
         content: "";
@@ -75,7 +81,7 @@
         background-color: var(--lbry-gray-1);
         border-radius: 0.2rem;
         font-family: Inconsolata, "Fira Mono", "Droid Sans Mono", "Source Code Pro",
-    Consolas, "Lucida Console", "Courier New", Courier, monospace;
+        Consolas, "Lucida Console", "Courier New", Courier, monospace;
         font-size: 1rem;
         letter-spacing: 0.025rem;
         padding: 0.2rem 0.5rem;
@@ -95,7 +101,7 @@
       <h1>Open with LBRY</h1>
 
       <div class="claim">
-        <span>lbry://</span><input id="name" maxlength="100" placeholder="Enter LBRY Claim / Channel here" type="text"/>
+        <span>lbry://</span><input id="name" maxlength="100" placeholder="Enter LBRY url, claim name, or channel name here" type="text" />
       </div>
 
       <div class="wlink" id="wlink" style="display: none;">
@@ -103,7 +109,7 @@
       </div>
 
       <div class="instructions">
-        <p>To create a hyperlink that opens in LBRY simply copy and paste the location of the file from the LBRY app into the claim field above (do not include <code>lbry://</code>).</p>
+        <p>To create a hyperlink that opens in LBRY, copy and paste the location of the file from the LBRY app into the claim field above.</p>
 
         <p>For example, <code>lbry://LBRYCreditsAcceptedHere</code> will open as <code>https://open.lbry.io/LBRYCreditsAcceptedHere</code>.</p>
       </div>
@@ -114,5 +120,23 @@
     </section>
   </body>
 
-  <script src="interactions.js"></script>
+  <script>
+    window.onload = function () {
+      const name = document.getElementById("name");
+      const link = document.getElementById("link");
+      const wlink = document.getElementById("wlink");
+
+      function handler() {
+        const domain = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+        const url = name.value.trim().replace(/^(lbry:\/\/)+/, "");
+        link.href = domain + "/" + encodeURIComponent(url);
+        link.textContent = url;
+        wlink.style.display = url ? "block" : "none";
+      }
+
+      name.addEventListener("input", handler);
+      handler();
+    }
+  </script>
 </html>
