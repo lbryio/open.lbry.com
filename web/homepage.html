@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Open in LBRY</title>
 
-    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="reset.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lbryio/components@master/dist/index.css"/>
 
     <style>
@@ -47,11 +47,11 @@
       }
 
       .instructions {
-        margin-bottom: 2rem;
+        margin-bottom: var(--spacing-l);
       }
 
       .instructions p:not(:last-of-type) {
-        margin-bottom: 1rem;
+        margin-bottom: var(--spacing-m);
       }
 
       .wlink {
@@ -61,7 +61,7 @@
       }
 
       .wlink:not(:last-of-type) {
-        margin-bottom: 2rem;
+        margin-bottom: var(--spacing-l);
       }
 
       .wlink::after {
@@ -79,7 +79,7 @@
 
       code {
         background-color: var(--lbry-gray-1);
-        border-radius: 0.2rem;
+        border-radius: var(--spacing-xxs);
         font-family: Inconsolata, "Fira Mono", "Droid Sans Mono", "Source Code Pro",
         Consolas, "Lucida Console", "Courier New", Courier, monospace;
         font-size: 1rem;
@@ -93,11 +93,9 @@
         color: var(--lbry-teal-4);
         text-decoration: none;
       }
-
-      .hidden {
-        display: none;
-      }
     </style>
+
+    <script src="analytics.js"></script>
   </head>
 
   <body>
@@ -127,33 +125,37 @@
   </body>
 
   <script>
-    window.onload = function () {
+    window.onload = function() {
+      const clearButton = document.getElementById("clearButton");
       const name = document.getElementById("name");
       const link = document.getElementById("link");
-      const wlink = document.getElementById("wlink");
-      const clearButton = document.getElementById("clearButton");
-      const prefValue = document.getElementById("prefValue");
-      const prefNotify = document.getElementById("prefNotify");
       const preference = localStorage.getItem("lbrytarget");
+      const prefNotify = document.getElementById("prefNotify");
+      const prefValue = document.getElementById("prefValue");
+      const wlink = document.getElementById("wlink");
       let preferenceText;
 
-      if (preference){
+      if (preference) {
         prefNotify.classList.remove("hidden");
 
-        if (preference === "appButton") {
+        if (preference === "appButton")
           preferenceText = "LBRY App";
-        } else {
+        else
           preferenceText = "LBRY.tv website";
-        }
+
         prefValue.innerHTML = preferenceText;
       }
 
       function handler() {
         const domain = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
         const url = name.value.trim().replace(/^(lbry:\/\/)+/, "");
+
         link.href = domain + "/" + encodeURIComponent(url);
         link.textContent = url;
-        wlink.style.display = url ? "block" : "none";
+
+        wlink.style.display = url ?
+          "block" :
+          "none";
       }
 
       function handleClear() {
@@ -163,6 +165,7 @@
 
       name.addEventListener("input", handler);
       clearButton.addEventListener("click", handleClear);
+
       handler();
     }
   </script>
