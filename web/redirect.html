@@ -20,6 +20,11 @@
         margin: 0 auto var(--spacing-l);
       }
 
+      .button--secondary {
+        color: var(--lbry-teal-4);
+        font-weight: 600;
+      }
+
       .container {
         align-items: center;
         background-color: var(--lbry-white);
@@ -62,18 +67,15 @@
   <body>
     <section class="container">
       <header class="container__header">
-        <button class="button--primary" id="stopButton">
-          Sending you to <span id="dest"></span> in <span id="timer"></span>
-        </button>
-
-        <small>Click button to stop timer</small>
+        <p>Sending you to <span id="dest"></span> in <span id="timer"></span></p>
+        <button class="button button--secondary" id="stopButton">Stop countdown</button>
       </header>
 
       <p>Choose where you want the link to go:</p>
 
       <div class="control-container">
-        <button class="button--primary" id="appButton">LBRY App</button>
-        <button class="button--primary" id="webButton">LBRY.tv (beta)</button>
+        <button class="button button--primary" id="appButton">LBRY App</button>
+        <button class="button button--primary" id="webButton">LBRY.tv (beta)</button>
       </div>
 
       <checkbox-element>
@@ -82,7 +84,7 @@
         <checkbox-toggle/>
       </checkbox-element>
 
-      <p>Don't have the LBRY app? <a class="button--primary" href="https://lbry.com/get" rel="noopener noreferrer" target="_blank">Download it here</a></p>
+      <small>Don't have the LBRY app? <a class="button button--secondary" href="https://lbry.com/get" rel="noopener noreferrer" target="_blank">Download it here</a></small>
     </section>
   </body>
 
@@ -141,7 +143,7 @@
 
         if (go) {
           if (count > 0) {
-            count--; // comment this line to develop this page without redirect happening
+            // count--; // comment this line to develop this page without redirect happening
             timer.innerHTML = " " + time + " ";
 
             return setTimeout(() => {
