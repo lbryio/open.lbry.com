@@ -4,55 +4,185 @@
     <meta charset="utf-8"/>
     <title>LBRY Redirect</title>
 
-    <link rel="stylesheet" href="lbry-color.css"/>
     <link rel="stylesheet" href="reset.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lbryio/components@master/dist/index.css"/>
 
     <style>
       body {
-        background-color: var(--lbry-cyan-5);
         background-image: linear-gradient(to bottom right, var(--lbry-teal-5), var(--lbry-cyan-5) 100%);
+      }
+
+      button {
         color: var(--lbry-white);
       }
 
-      section {
+      checkbox-element {
+        margin: 0 auto var(--spacing-l);
+      }
+
+      .button--secondary {
+        color: var(--lbry-teal-4);
+        font-weight: 600;
+      }
+
+      .container {
+        align-items: center;
+        background-color: var(--lbry-white);
+        border-radius: var(--spacing-xxs);
+        display: flex;
+        flex-direction: column;
+        font-size: 1.25rem;
+        max-width: 500px;
+        padding: var(--spacing-l);
         text-align: center;
       }
 
-      p:not(:last-of-type) {
+      .container__header {
         margin-bottom: 2rem;
       }
 
-      a {
-        background-color: var(--lbry-white);
-        border-radius: 0.2rem;
-        color: var(--lbry-cyan-5);
-        font-size: 1.2rem;
-        padding: 0.2rem 0.5rem;
-        text-decoration: none;
+      .container__header small {
+        color: var(--lbry-gray-4);
+        display: block;
+        padding-top: var(--spacing-xxs);
+      }
+
+      .control-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        padding-top: var(--spacing-s);
+        padding-bottom: var(--spacing-s);
+      }
+
+      .control-container *:first-child {
+        margin-right: var(--spacing-m);
       }
     </style>
+
+    <script src="analytics.js"></script>
   </head>
 
   <body>
-    <section>
-      <h1>Buckle up, gang!</h1>
-      <p>Redirect in progress...</p>
-      <p>If you do not have the LBRY app, you can <a href="https://lbry.io/get" rel="noopener noreferrer" target="_blank">download it here</a>.</p>
+    <section class="container">
+      <header class="container__header">
+        <p>Sending you to <span id="dest"></span> in <span id="timer"></span></p>
+        <button class="button button--secondary" id="stopButton">Stop countdown</button>
+      </header>
+
+      <p>Choose where you want the link to go:</p>
+
+      <div class="control-container">
+        <button class="button button--primary" id="appButton">LBRY App</button>
+        <button class="button button--primary" id="webButton">LBRY.tv (beta)</button>
+      </div>
+
+      <checkbox-element>
+        <input id="remember" name="remember" type="checkbox">
+        <label for="remember">Always do this</label>
+        <checkbox-toggle/>
+      </checkbox-element>
+
+      <small>Don't have the LBRY app? <a class="button button--secondary" href="https://lbry.com/get" rel="noopener noreferrer" target="_blank">Download it here</a></small>
     </section>
   </body>
 
   <script>
-    (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","https://www.google-analytics.com/analytics.js","ga");
-    ga("create", "UA-60403362-9", "auto");
-    ga("send", "pageview");
-    
-    const site = window.location.protocol + "//" + window.location.host;
-    const url = decodeURIComponent(window.location.href.replace(site,"").replace(/^\//,""));
-  
-    if (url) {
-      setTimeout(() => {
-        window.location = "lbry://" + url;
-      }, 2000);
-    }
+    const APP_BUTTON = "appButton";
+    const APP_PREFIX = "lbry://";
+    const LBRY_TARGET = "lbrytarget";
+    const TV_PREFIX = "https://beta.lbry.tv/";
+    const WEB_BUTTON = "webButton";
+
+    let prefix = TV_PREFIX;
+    let site = window.location.protocol + "//" + window.location.host;
+    let url = decodeURIComponent(window.location.href.replace(site, "").replace(/^\//, ""));
+
+    (function letsGo() {
+      let go = true;
+      let storedDest = localStorage.getItem(LBRY_TARGET); // webButton or appButton
+
+      // elements
+      const appButton = document.getElementById("appButton");
+      const countdown = document.getElementById("countdown");
+      const dest = document.getElementById("dest");
+      const rememberBox = document.getElementById("remember");
+      const stopButton = document.getElementById("stopButton");
+      const timer = document.getElementById("timer");
+      const webButton = document.getElementById("webButton");
+
+      // event listeners
+      appButton.addEventListener("click", handleChoice);
+      rememberBox.addEventListener("click", handleRemember);
+      stopButton.addEventListener("click", stop);
+      webButton.addEventListener("click", handleChoice);
+
+      dest.innerHTML = "LBRY.tv";
+
+      if (storedDest) {
+        rememberBox.checked = true;
+
+        if (storedDest === WEB_BUTTON) {
+          dest.innerHTML = "LBRY.tv";
+          prefix = TV_PREFIX;
+        } else if (storedDest === APP_BUTTON) {
+          dest.innerHTML = "your LBRY App";
+          prefix = APP_PREFIX;
+        } else {
+          localStorage.clear();
+        }
+
+        countDown(1);
+      } else {
+        countDown(5);
+      }
+
+      function countDown(time) {
+        let count = time;
+
+        if (go) {
+          if (count > 0) {
+            // count--; // comment this line to develop this page without redirect happening
+            timer.innerHTML = " " + time + " ";
+
+            return setTimeout(() => {
+              countDown(count);
+            }, 1000);
+          } else {
+            goToLbry()
+          }
+        }
+
+        return;
+      }
+
+      function goToLbry() {
+        window.location = prefix + url;
+      }
+
+      function handleChoice(event) {
+        stop();
+        let choice = event.target.id;
+
+        prefix = (choice === APP_BUTTON) ?
+          APP_PREFIX :
+          TV_PREFIX;
+
+        if (rememberBox.checked)
+          localStorage.setItem(LBRY_TARGET, choice);
+
+        goToLbry();
+      }
+
+      function handleRemember() {
+        stop();
+        !rememberBox.checked && localStorage.removeItem(LBRY_TARGET);
+      }
+
+      function stop() {
+        go = false;
+      }
+    })();
   </script>
 </html>
