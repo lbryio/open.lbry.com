@@ -165,7 +165,7 @@
 
       function goToLbry() {
         if (prefix === TV_PREFIX)
-          window.location = prefix + encodeURIComponent(url.replace("#", "/"));
+          window.location = prefix + url.replace("#", "/");
         else
           window.location = prefix + url;
       }
