@@ -167,7 +167,7 @@
         if (prefix === TV_PREFIX)
           window.location = prefix + url.replace("#", "/");
         else
-          window.location = prefix + url;
+          window.location = prefix + url.replace(":", "#");
       }
 
       function handleChoice(event) {
