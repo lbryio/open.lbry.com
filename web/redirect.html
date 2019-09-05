@@ -159,15 +159,14 @@
             goToLbry();
           }
         }
-
-        return;
       }
 
       function goToLbry() {
         if (prefix === TV_PREFIX)
           window.location = prefix + url.replace("#", "/");
-        else
-          window.location = prefix + url.replace(":", "#");
+        else{
+          window.location = prefix + url.replace(/:/g, "#");
+        }
       }
 
       function handleChoice(event) {
