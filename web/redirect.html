@@ -162,8 +162,10 @@
       }
 
       function goToLbry() {
-        if (prefix === APP_PREFIX) {
+        if (prefix === APP_PREFIX)
           window.location = prefix + url.replace(/:/g, "#");
+        else {
+          window.location = prefix + url;
         }
       }
 
