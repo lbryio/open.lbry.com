@@ -162,10 +162,11 @@
       }
 
       function goToLbry() {
-        if (prefix === APP_PREFIX)
+        if (prefix === APP_PREFIX) {
           window.location = prefix + url.replace(/:/g, "#");
           // hackaround for next day email that comes in like: ?rewards=&utm_medium=email...
           window.location = prefix + url.replace("=&", "?");
+        }
         else {
           window.location = prefix + url;
         }
