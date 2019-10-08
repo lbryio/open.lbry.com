@@ -167,7 +167,11 @@
           window.location = prefix + url.replace(/:/g, "#").replace("=&", "?");
         }
         else {
-          window.location = prefix + url;
+          if (url[0] === '?') {
+            window.location = `${prefix}$/${url.slice(1)}`
+          } else {
+            window.location = `${prefix}${url}`;
+          }
         }
       }
 
