@@ -75,7 +75,7 @@
 
       <div class="control-container">
         <button class="button button--primary" id="appButton">LBRY App</button>
-        <button class="button button--primary" id="webButton">LBRY Web (beta)</button>
+        <button class="button button--primary" id="webButton">lbry.tv)</button>
       </div>
 
       <checkbox-element>
@@ -118,14 +118,14 @@
       stopButton.addEventListener("click", stop);
       webButton.addEventListener("click", handleChoice);
 
-      dest.innerHTML = "LBRY.tv";
+      dest.innerHTML = "lbry.tv";
 
       if (storedDest) {
         rememberBox.checked = true;
 
         switch(true) {
           case storedDest === WEB_BUTTON:
-            dest.innerHTML = "LBRY.tv";
+            dest.innerHTML = "lbry.tv";
             prefix = TV_PREFIX;
             break;
 
@@ -168,9 +168,9 @@
         }
         else {
           if (url[0] === '?') {
-            window.location = `${prefix}$/${url.slice(1)}`
+            window.location = `${prefix}$/${url.replace("=&", "?").slice(1)}`
           } else {
-            window.location = `${prefix}${url}`;
+            window.location = `${prefix}${url.replace("=&", "?")}`;
           }
         }
       }
